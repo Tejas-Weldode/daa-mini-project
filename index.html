@@ -6,25 +6,43 @@
         <title>Document</title>
         <style>
             * {
+                background-color: black;
+                color: white;
                 font-family: "Courier New", Courier, monospace;
             }
         </style>
     </head>
     <body>
+        <p id="id"></p>
         <script>
             // JavaScript program to solve N Queen
             const N = 8;
+            const DELAY_TIME = 100;
+            let stepCount = 0;
+
+            function delayThis() {
+                return new Promise((resolve) => {
+                    setTimeout(() => {
+                        //
+                        console.log("delay");
+                        //
+                        resolve();
+                    }, DELAY_TIME);
+                });
+            }
 
             function printSolution(board) {
-                document.body.innerHTML = "";
-                console.log(board);
+                document.getElementById("id").innerHTML = "";
+                document.getElementById("id").innerHTML += `(${stepCount})<br>`;
                 for (let i = 0; i < N; i++) {
                     for (let j = 0; j < N; j++) {
-                        if (board[i][j] == 1) document.write("Q ");
-                        else document.body.innerHTML += ". ";
+                        if (board[i][j] == 1)
+                            document.getElementById("id").innerHTML += "Q ";
+                        else document.getElementById("id").innerHTML += ". ";
                     }
-                    document.body.innerHTML += "</br>";
+                    document.getElementById("id").innerHTML += "<br>";
                 }
+                stepCount++;
             }
 
             function isSafe(board, row, col) {
@@ -38,19 +56,22 @@
             }
 
             async function solveNQUtil(board, col) {
-                await new Promise((resolve) => setTimeout(resolve, 500)); // Adjust the delay time as needed.
+                await delayThis();
+                printSolution(board);
+                console.log("here");
                 if (col >= N) return true;
                 for (let i = 0; i < N; i++) {
                     if (isSafe(board, i, col) == true) {
                         board[i][col] = 1;
-                        if (solveNQUtil(board, col + 1) == true) return true;
+                        if ((await solveNQUtil(board, col + 1)) == true)
+                            return true;
                         board[i][col] = 0;
                     }
                 }
                 return false;
             }
 
-            function solveNQ() {
+            async function solveNQ() {
                 let board = [
                     [0, 0, 0, 0, 0, 0, 0, 0],
                     [0, 0, 0, 0, 0, 0, 0, 0],
@@ -61,10 +82,13 @@
                     [0, 0, 0, 0, 0, 0, 0, 0],
                     [0, 0, 0, 0, 0, 0, 0, 0],
                 ];
-                if (solveNQUtil(board, 0) == false) {
+
+                if ((await solveNQUtil(board, 0)) == false) {
                     document.write("Solution does not exist");
                     return false;
                 }
+
+                printSolution(board);
                 return true;
             }
             solveNQ();
