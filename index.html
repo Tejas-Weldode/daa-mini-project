@@ -10,27 +10,15 @@
                 color: white;
                 font-family: "Courier New", Courier, monospace;
             }
-            .box {
-                height: 12vw;
-                width: 12vw;
-            }
-            .dark {
-                background-color: blue;
-            }
-            .light {
-                background-color: white;
-            }
         </style>
     </head>
     <body>
-        <div class="box"></div>
         <p id="id"></p>
         <script>
             // JavaScript program to solve N Queen
             const N = 8;
             const DELAY_TIME = 100;
             let stepCount = 0;
-
             function delayThis() {
                 return new Promise((resolve) => {
                     setTimeout(() => {
@@ -43,44 +31,18 @@
             }
 
             function printSolution(board) {
-                // clear all
                 document.getElementById("id").innerHTML = "";
-                // add new line
                 document.getElementById("id").innerHTML += `(${stepCount})<br>`;
-                // print board
-                let square_count = 8;
                 for (let i = 0; i < N; i++) {
                     for (let j = 0; j < N; j++) {
-                        // for queen
-                        if (board[i][j] == 1) {
-                            // light
-                            if (square_count % 8 === 0)
-                                document.getElementById("id").innerHTML +=
-                                    "<span class='box light'>Q </span>";
-                            // dark
-                            else
-                                document.getElementById("id").innerHTML +=
-                                    "<span class='box dark'>Q </span>";
-                        }
-                        // for empty
-                        else {
-                            // light
-                            if (square_count % 8 === 0)
-                                document.getElementById("id").innerHTML +=
-                                    "<span class='box light'>. </span>";
-                            // dark
-                            else
-                                document.getElementById("id").innerHTML +=
-                                    "<span class='box dark'>. </span>";
-                        }
-
-                        square_count++;
+                        if (board[i][j] == 1)
+                            document.getElementById("id").innerHTML += "Q ";
+                        else document.getElementById("id").innerHTML += ". ";
                     }
                     document.getElementById("id").innerHTML += "<br>";
                 }
                 stepCount++;
             }
-
             function isSafe(board, row, col) {
                 for (let i = 0; i < col; i++)
                     if (board[row][i] == 1) return false;
@@ -90,7 +52,6 @@
                     if (board[i][j]) return false;
                 return true;
             }
-
             async function solveNQUtil(board, col) {
                 await delayThis();
                 printSolution(board);
@@ -106,7 +67,6 @@
                 }
                 return false;
             }
-
             async function solveNQ() {
                 let board = [
                     [0, 0, 0, 0, 0, 0, 0, 0],
@@ -118,12 +78,10 @@
                     [0, 0, 0, 0, 0, 0, 0, 0],
                     [0, 0, 0, 0, 0, 0, 0, 0],
                 ];
-
                 if ((await solveNQUtil(board, 0)) == false) {
                     document.write("Solution does not exist");
                     return false;
                 }
-
                 printSolution(board);
                 return true;
             }
