@@ -10,9 +10,20 @@
                 color: white;
                 font-family: "Courier New", Courier, monospace;
             }
+            .box {
+                height: 12vw;
+                width: 12vw;
+            }
+            .dark {
+                background-color: blue;
+            }
+            .light {
+                background-color: white;
+            }
         </style>
     </head>
     <body>
+        <div class="box"></div>
         <p id="id"></p>
         <script>
             // JavaScript program to solve N Queen
@@ -32,13 +43,38 @@
             }
 
             function printSolution(board) {
+                // clear all
                 document.getElementById("id").innerHTML = "";
+                // add new line
                 document.getElementById("id").innerHTML += `(${stepCount})<br>`;
+                // print board
+                let square_count = 8;
                 for (let i = 0; i < N; i++) {
                     for (let j = 0; j < N; j++) {
-                        if (board[i][j] == 1)
-                            document.getElementById("id").innerHTML += "Q ";
-                        else document.getElementById("id").innerHTML += ". ";
+                        // for queen
+                        if (board[i][j] == 1) {
+                            // light
+                            if (square_count % 8 === 0)
+                                document.getElementById("id").innerHTML +=
+                                    "<span class='box light'>Q </span>";
+                            // dark
+                            else
+                                document.getElementById("id").innerHTML +=
+                                    "<span class='box dark'>Q </span>";
+                        }
+                        // for empty
+                        else {
+                            // light
+                            if (square_count % 8 === 0)
+                                document.getElementById("id").innerHTML +=
+                                    "<span class='box light'>. </span>";
+                            // dark
+                            else
+                                document.getElementById("id").innerHTML +=
+                                    "<span class='box dark'>. </span>";
+                        }
+
+                        square_count++;
                     }
                     document.getElementById("id").innerHTML += "<br>";
                 }

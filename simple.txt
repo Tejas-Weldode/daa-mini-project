@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <style>
+            * {
+                background-color: black;
+                color: white;
+                font-family: "Courier New", Courier, monospace;
+            }
+        </style>
+    </head>
+    <body>
+        <p id="id">hahaha</p>
+        <script>
+            function delayThis() {
+                return new Promise((resolve) => {
+                    setTimeout(() => {
+                        //
+                        console.log("delay");
+                        //
+                        resolve();
+                    }, 1000);
+                });
+            }
+
+            async function driver(a) {
+                await delayThis();
+                document.getElementById("id").innerHTML = a;
+                driver(++a);
+            }
+
+            driver(0);
+        </script>
+    </body>
+</html>
